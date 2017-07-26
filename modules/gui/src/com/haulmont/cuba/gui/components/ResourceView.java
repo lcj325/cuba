@@ -42,7 +42,7 @@ public interface ResourceView extends Component, Component.HasCaption {
      * @param type resource class to be created
      * @return new resource instance
      */
-    <T extends Resource> T setSource(Class<T> type);
+    <R extends Resource> R setSource(Class<R> type);
 
     /**
      * Creates resource implementation by its type.
@@ -50,7 +50,7 @@ public interface ResourceView extends Component, Component.HasCaption {
      * @param type resource type
      * @return new resource instance with given type
      */
-    <T extends Resource> T createResource(Class<T> type);
+    <R extends Resource> R createResource(Class<R> type);
 
     /**
      * Sets this component's alternate text that can be presented instead of the component's normal content for
@@ -69,12 +69,12 @@ public interface ResourceView extends Component, Component.HasCaption {
     String getAlternateText();
 
     /**
-     * Adds a listener that will be notified when a source of an  is changed.
+     * Adds a listener that will be notified when a source is changed.
      */
     void addSourceChangeListener(SourceChangeListener listener);
 
     /**
-     * Removes a listener that will be notified when a source of an  is changed.
+     * Removes a listener that will be notified when a source is changed.
      */
     void removeSourceChangeListener(SourceChangeListener listener);
 
