@@ -17,9 +17,7 @@
 package com.haulmont.cuba.web.gui.components;
 
 import com.google.common.collect.ImmutableMap;
-import com.haulmont.cuba.gui.components.ResourceView;
-import com.haulmont.cuba.web.gui.components.imageresources.*;
-import com.vaadin.server.DownloadStream;
+import com.haulmont.cuba.gui.components.*;
 import com.vaadin.shared.util.SharedUtil;
 import com.vaadin.ui.AbstractEmbedded;
 
@@ -28,7 +26,7 @@ import java.util.Map;
 public abstract class WebAbstractResourceView<T extends AbstractEmbedded> extends WebAbstractComponent<T>
         implements ResourceView {
 
-    protected ResourceView.Resource resource;
+    protected Resource resource;
 
     protected static final Map<Class<? extends Resource>, Class<? extends Resource>> resourcesClasses;
 
@@ -102,7 +100,7 @@ public abstract class WebAbstractResourceView<T extends AbstractEmbedded> extend
 
     @Override
     public <R extends Resource> R createResource(Class<R> type) {
-        Class<? extends ResourceView.Resource> imageResourceClass = resourcesClasses.get(type);
+        Class<? extends Resource> imageResourceClass = resourcesClasses.get(type);
         if (imageResourceClass == null) {
             throw new IllegalStateException(String.format("Can't find image resource class for '%s'", type.getTypeName()));
         }
@@ -125,84 +123,13 @@ public abstract class WebAbstractResourceView<T extends AbstractEmbedded> extend
         getEventRouter().removeListener(SourceChangeListener.class, listener);
     }
 
-    public abstract static class WebAbstractResource implements WebResource {
-        protected com.vaadin.server.Resource resource;
-        protected Runnable resourceUpdateHandler;
-
-        protected boolean hasSource = false;
-
-        @Override
-        public com.vaadin.server.Resource getResource() {
-            if (resource == null) {
-                createResource();
-            }
-            return resource;
-        }
-
-        protected boolean hasSource() {
-            return hasSource;
-        }
-
-        protected void fireResourceUpdateEvent() {
-            resource = null;
-
-            if (resourceUpdateHandler != null) {
-                resourceUpdateHandler.run();
-            }
-        }
-
-        protected void setResourceUpdatedHandler(Runnable resourceUpdated) {
-            this.resourceUpdateHandler = resourceUpdated;
-        }
-
-        protected abstract void createResource();
+    @Override
+    public void setAlternateText(String alternateText) {
+        component.setAlternateText(alternateText);
     }
 
-    public abstract static class WebAbstractStreamSettingsResource extends WebAbstractResource implements HasStreamSettings {
-        protected long cacheTime = DownloadStream.DEFAULT_CACHETIME;
-        protected int bufferSize;
-        protected String fileName;
-
-        @Override
-        public void setCacheTime(long cacheTime) {
-            this.cacheTime = cacheTime;
-
-            if (resource != null) {
-                ((com.vaadin.server.StreamResource) resource).setCacheTime(cacheTime);
-            }
-        }
-
-        @Override
-        public long getCacheTime() {
-            return cacheTime;
-        }
-
-        @Override
-        public void setBufferSize(int bufferSize) {
-            this.bufferSize = bufferSize;
-
-            if (resource != null) {
-                ((com.vaadin.server.StreamResource) resource).setBufferSize(bufferSize);
-            }
-        }
-
-        @Override
-        public int getBufferSize() {
-            return bufferSize;
-        }
-
-        @Override
-        public void setFileName(String fileName) {
-            this.fileName = fileName;
-
-            if (resource != null) {
-                ((com.vaadin.server.StreamResource) resource).setFilename(fileName);
-            }
-        }
-
-        @Override
-        public String getFileName() {
-            return fileName;
-        }
+    @Override
+    public String getAlternateText() {
+        return component.getAlternateText();
     }
 }

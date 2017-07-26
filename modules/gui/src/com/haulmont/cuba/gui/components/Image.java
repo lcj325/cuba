@@ -21,7 +21,7 @@ import com.haulmont.cuba.gui.data.Datasource;
 
 /**
  * The Image component is intended for displaying graphic content.
- *
+ * <p>
  * It can be bound to a datasource or configured manually.
  */
 public interface Image extends ResourceView {

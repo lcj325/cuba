@@ -1567,7 +1567,7 @@
 
     <xs:complexType name="resourceViewComponent">
         <xs:complexContent>
-            <xs:extension base="baseFieldComponent">
+            <xs:extension base="baseComponent">
                 <xs:choice minOccurs="0">
                     <xs:element name="file" type="fileResource"/>
                     <xs:element name="theme" type="themeResource"/>
@@ -1575,14 +1575,19 @@
                     <xs:element name="url" type="urlResource"/>
                     <xs:element name="relativePath" type="relativePathResource"/>
                 </xs:choice>
+                <xs:attribute name="alternateText" type="xs:string"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    
+
     <xs:complexType name="imageComponent">
         <xs:complexContent>
             <xs:extension base="resourceViewComponent">
                 <xs:attribute name="scaleMode" type="scaleMode"/>
+
+                <xs:attributeGroup ref="hasEditable"/>
+                <xs:attributeGroup ref="hasRequirements"/>
+                <xs:attributeGroup ref="hasDatasource"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package com.haulmont.cuba.web.gui.components.imageresources;
+package com.haulmont.cuba.web.gui.components;
 
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Resources;
-import com.haulmont.cuba.gui.components.ResourceView.ClasspathResource;
-import com.haulmont.cuba.web.gui.components.WebAbstractResourceView;
+import com.haulmont.cuba.gui.components.ClasspathResource;
 import com.vaadin.server.StreamResource;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 
-public class WebClasspathResource extends WebAbstractResourceView.WebAbstractStreamSettingsResource
-        implements WebResource, ClasspathResource {
+public class WebClasspathResource extends WebAbstractStreamSettingsResource implements WebResource, ClasspathResource {
 
     protected String path;
 

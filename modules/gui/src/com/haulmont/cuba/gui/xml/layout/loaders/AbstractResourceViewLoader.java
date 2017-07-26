@@ -17,7 +17,7 @@
 package com.haulmont.cuba.gui.xml.layout.loaders;
 
 import com.haulmont.cuba.gui.GuiDevelopmentException;
-import com.haulmont.cuba.gui.components.ResourceView;
+import com.haulmont.cuba.gui.components.*;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
@@ -44,6 +44,8 @@ public abstract class AbstractResourceViewLoader<T extends ResourceView> extends
         loadAlign(resultComponent, element);
 
         loadResource(resultComponent, element);
+
+        loadAlternateText(resultComponent, element);
     }
 
     protected void loadResource(ResourceView image, Element element) {
@@ -68,7 +70,7 @@ public abstract class AbstractResourceViewLoader<T extends ResourceView> extends
             throw new GuiDevelopmentException("No path provided for the RelativePathImageResource", context.getFullFrameId());
         }
 
-        ResourceView.RelativePathResource resource = resultComponent.createResource(ResourceView.RelativePathResource.class);
+        RelativePathResource resource = resultComponent.createResource(RelativePathResource.class);
 
         resource.setPath(path);
 
@@ -89,7 +91,7 @@ public abstract class AbstractResourceViewLoader<T extends ResourceView> extends
             throw new GuiDevelopmentException("No url provided for the UrlImageResource", context.getFullFrameId());
         }
 
-        ResourceView.UrlResource resource = resultComponent.createResource(ResourceView.UrlResource.class);
+        UrlResource resource = resultComponent.createResource(UrlResource.class);
         try {
             resource.setUrl(new URL(url));
 
@@ -112,7 +114,7 @@ public abstract class AbstractResourceViewLoader<T extends ResourceView> extends
             throw new GuiDevelopmentException("No path provided for the ClasspathImageResource", context.getFullFrameId());
         }
 
-        ResourceView.ClasspathResource resource = resultComponent.createResource(ResourceView.ClasspathResource.class);
+        ClasspathResource resource = resultComponent.createResource(ClasspathResource.class);
 
         resource.setPath(classpathPath);
 
@@ -134,7 +136,7 @@ public abstract class AbstractResourceViewLoader<T extends ResourceView> extends
             throw new GuiDevelopmentException("No path provided for the ThemeImageResource", context.getFullFrameId());
         }
 
-        resultComponent.setSource(ResourceView.ThemeResource.class).setPath(themePath);
+        resultComponent.setSource(ThemeResource.class).setPath(themePath);
 
         return true;
     }
@@ -155,7 +157,7 @@ public abstract class AbstractResourceViewLoader<T extends ResourceView> extends
             throw new GuiDevelopmentException(msg, context.getFullFrameId());
         }
 
-        ResourceView.FileResource resource = resultComponent.createResource(ResourceView.FileResource.class);
+        FileResource resource = resultComponent.createResource(FileResource.class);
 
         resource.setFile(file);
 
@@ -182,6 +184,13 @@ public abstract class AbstractResourceViewLoader<T extends ResourceView> extends
         String bufferSize = resourceElement.attributeValue("bufferSize");
         if (StringUtils.isNotEmpty(bufferSize)) {
             resource.setBufferSize(Integer.parseInt(bufferSize));
+        }
+    }
+
+    protected void loadAlternateText(ResourceView resultComponent, Element element) {
+        String alternateText = element.attributeValue("alternateText");
+        if (StringUtils.isNotEmpty(alternateText)) {
+            resultComponent.setAlternateText(alternateText);
         }
     }
 }

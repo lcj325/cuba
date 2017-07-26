@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package com.haulmont.cuba.web.gui.components.imageresources;
+package com.haulmont.cuba.web.gui.components;
 
 import com.haulmont.bali.util.Preconditions;
-import com.haulmont.cuba.gui.components.ResourceView;
-import com.haulmont.cuba.web.gui.components.WebAbstractResourceView;
-import com.vaadin.server.StreamResource;
+import com.haulmont.cuba.gui.components.StreamResource;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.InputStream;
 import java.util.function.Supplier;
 
-public class WebStreamResource extends WebAbstractResourceView.WebAbstractStreamSettingsResource
-        implements WebResource, ResourceView.StreamResource {
+public class WebStreamResource extends WebAbstractStreamSettingsResource implements WebResource, StreamResource {
 
     protected Supplier<InputStream> streamSupplier;
 
     protected String mimeType;
 
     @Override
-    public ResourceView.StreamResource setStreamSupplier(Supplier<InputStream> streamSupplier) {
+    public StreamResource setStreamSupplier(Supplier<InputStream> streamSupplier) {
         Preconditions.checkNotNullArgument(streamSupplier);
 
         this.streamSupplier = streamSupplier;
@@ -54,14 +51,14 @@ public class WebStreamResource extends WebAbstractResourceView.WebAbstractStream
     protected void createResource() {
         String name = StringUtils.isNotEmpty(fileName) ? fileName : RandomStringUtils.random(16, true, true);
 
-        resource = new StreamResource(() ->
+        resource = new com.vaadin.server.StreamResource(() ->
                 streamSupplier.get(), name);
 
-        StreamResource streamResource = (StreamResource) this.resource;
+        com.vaadin.server.StreamResource vStreamResource = (com.vaadin.server.StreamResource) this.resource;
 
-        streamResource.setCacheTime(cacheTime);
-        streamResource.setBufferSize(bufferSize);
-        streamResource.setMIMEType(mimeType);
+        vStreamResource.setCacheTime(cacheTime);
+        vStreamResource.setBufferSize(bufferSize);
+        vStreamResource.setMIMEType(mimeType);
     }
 
     @Override
@@ -69,7 +66,7 @@ public class WebStreamResource extends WebAbstractResourceView.WebAbstractStream
         this.mimeType = mimeType;
 
         if (resource != null) {
-            ((StreamResource) resource).setMIMEType(mimeType);
+            ((com.vaadin.server.StreamResource) resource).setMIMEType(mimeType);
         }
     }
 

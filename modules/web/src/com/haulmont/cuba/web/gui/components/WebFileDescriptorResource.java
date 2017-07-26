@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package com.haulmont.cuba.web.gui.components.imageresources;
+package com.haulmont.cuba.web.gui.components;
 
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.cuba.core.app.FileStorageService;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.FileStorageException;
-import com.haulmont.cuba.gui.components.ResourceView.FileDescriptorResource;
+import com.haulmont.cuba.gui.components.FileDescriptorResource;
 import com.haulmont.cuba.gui.export.ByteArrayDataProvider;
-import com.haulmont.cuba.web.gui.components.WebAbstractResourceView;
 import com.vaadin.server.StreamResource;
 import org.apache.commons.lang.StringUtils;
 
-public class WebFileDescriptorResource extends WebAbstractResourceView.WebAbstractStreamSettingsResource
+public class WebFileDescriptorResource extends WebAbstractStreamSettingsResource
         implements WebResource, FileDescriptorResource {
 
-    protected static final String FILE_STORAGE_EXCEPTION_MESSAGE = "Can't create FileDescriptorImageResource. " +
-            "An error occurred while finding file in file storage";
+    protected static final String FILE_STORAGE_EXCEPTION_MESSAGE = "Can't create FileDescriptorResource. " +
+            "An error occurred while obtaining a file from the storage";
 
     protected FileDescriptor fileDescriptor;
 
