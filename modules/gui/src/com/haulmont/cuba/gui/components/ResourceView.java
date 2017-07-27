@@ -40,6 +40,8 @@ public interface ResourceView extends Component, Component.HasCaption {
      * Creates the resource with the given <code>type</code> and sets it to the component.
      *
      * @param type resource class to be created
+     * @param <R>  {@link Resource} inheritor
+     *
      * @return new resource instance
      */
     <R extends Resource> R setSource(Class<R> type);
@@ -47,7 +49,9 @@ public interface ResourceView extends Component, Component.HasCaption {
     /**
      * Creates resource implementation by its type.
      *
-     * @param type resource type
+     * @param type resource class to be created
+     * @param <R> {@link Resource} inheritor
+     *
      * @return new resource instance with given type
      */
     <R extends Resource> R createResource(Class<R> type);

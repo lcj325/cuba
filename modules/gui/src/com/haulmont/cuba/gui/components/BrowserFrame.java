@@ -16,6 +16,9 @@
 
 package com.haulmont.cuba.gui.components;
 
+/**
+ * A component displaying an embedded web page. Implemented as a HTML <code>iframe</code> element.
+ */
 public interface BrowserFrame extends ResourceView {
     String NAME = "browserFrame";
 }
